@@ -1,5 +1,5 @@
 const { BigQuery } = require('@google-cloud/bigquery');
-
+/*
 const query = (billingAccountId,billingDataset) => `
 SELECT
   invoice.month,
@@ -16,7 +16,24 @@ GROUP BY 1
 ORDER BY 1 ASC
 ;
 `;
-const billingReport = data => data[0].map(row => `month:${row.month} total:${row.total} total_exact:${row.total_exact}`).join('\n');
+*/
+const query = (billingAccountId,billingDataset) => `
+SELECT
+  ROUND(SUM(cost),4) AS total,
+  FORMAT_DATE('%Y-%m-%d', DATE(usage_end_time)) AS day
+FROM \`${billingDataset}.gcp_billing_export_resource_v1_${billingAccountId}\`
+WHERE
+  cost_type = "regular" AND
+  FORMAT_DATE('%Y-%m-%d', DATE(usage_end_time)) = FORMAT_DATE('%Y-%m-%d', CURRENT_DATE()) OR 
+  FORMAT_DATE('%Y-%m-%d', DATE(usage_end_time)) = FORMAT_DATE('%Y-%m-%d', DATE_ADD(CURRENT_DATE(), INTERVAL -1 DAY)) OR
+  FORMAT_DATE('%Y-%m-%d', DATE(usage_end_time)) = FORMAT_DATE('%Y-%m-%d', DATE_ADD(CURRENT_DATE(), INTERVAL -7 DAY))
+GROUP BY 
+  day
+ORDER BY
+  day desc
+;
+`;
+const billingReport = data => data[0].map(row => `${row.day}:${row.total}`).join('\n');
 
 class BillingReporter {
 
