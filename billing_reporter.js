@@ -19,7 +19,7 @@ ORDER BY 1 ASC
 */
 const query = (billingAccountId,billingDataset) => `
 SELECT
-  ROUND(SUM(cost),4) AS total,
+  ROUND(SUM(cost),2) AS total,
   FORMAT_DATE('%Y-%m-%d', DATE(usage_end_time)) AS day
 FROM \`${billingDataset}.gcp_billing_export_resource_v1_${billingAccountId}\`
 WHERE
