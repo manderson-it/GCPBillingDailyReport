@@ -33,10 +33,7 @@ ORDER BY
   day desc
 ;
 `;
-// const billingReport = data => data[0].map(row => `${row.day} ${row.total}`).join('\n');
-let billingReport = "";
-billingReport = `:bangbang: *GCP Costs* :bangbang:`;
-billingReport += data => data[0].map(row => `${row.day} ${row.total}`).join('\n');
+const billingReport = data => data[0].map(row => `${row.day} ${row.total}`).join('\n');
 
 class BillingReporter {
 
