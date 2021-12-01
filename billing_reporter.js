@@ -20,8 +20,7 @@ ORDER BY
   day DESC
 ;
 `;
-const billingReport = data => data[0].map(row => `*Date*: ${row.day} *Cost*: $${row.total}`).join('\n');
-
+const billingReport = data => data[0].map(row => `*Date:* ${row.day} *Environment:* ${row.environment} *Cost:* ${row.total}`).join('\n');
 class BillingReporter {
 
     constructor(projectId, billingAccountId, billingDataset) {
