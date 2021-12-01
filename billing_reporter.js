@@ -2,7 +2,7 @@ const { BigQuery } = require('@google-cloud/bigquery');
 
 const query = (billingAccountId,billingDataset) => `
 SELECT
-  ROUND(SUM(cost),2) AS dailyCost,
+  ROUND(SUM(cost),2) AS total,
   FORMAT_DATE('%Y-%m-%d', DATE(usage_end_time)) AS day,
   (
       SELECT value
