@@ -17,7 +17,7 @@ function main() {
     const dsLink       = "Datastudio link goes here";
 
     return billingReporter.query().then(
-        result => slackWebhooker.post(`:heavy_dollar_sign: *Billing Report* :heavy_dollar_sign: \n${result} \n${dsLink}`)
+        result => slackWebhooker.post(`:heavy_dollar_sign: *Billing Report* :heavy_dollar_sign: \n${result} \n \n${dsLink}`)
     ).then(console.log).catch(console.error);
 }
 
